@@ -1,0 +1,82 @@
+Python3
+Flask
+PostgreSQL
+psycopg2: connect to Postgres server to a Flask application 
+SQLAlchemy
+Flask-SQLAlchemy
+
+Database Management System
+  Software to interact with a database
+
+Database Application Programming Interfaces (DBAPIs)
+  Interact with a database from another language/webserver framework
+
+pyscopg2
+  library to interact with database from Python
+
+relational databases
+  database: collection of data
+  database system: storing/retrieving data 
+
+properties of databases
+  Persistence: access later 
+  Shared source of truth: accessible by many usuers
+  Store many data types 
+  Concurrency control (handling many db actions at once)
+
+relational vs nonrelational databases 
+  
+relational database 
+  All data is stored in tables
+  Every list of columns with data types per column
+  Data intergrity: 
+    Constraints 
+    Triggers
+
+Primary Keys (Composite key for multiple columns of primary keys)
+  1 or more columns that uniquely identifies the whole row
+  If more than 1 column
+
+Foreign Key
+  Maps 2 primary keys: encodes relationship from one table to another 
+
+    Ex vehicles, drivers 
+    id of drivers 
+    have driver_id in anaother table's columns to link drivers and v    vehicles 
+
+SQL: Structure Query Language
+  Standard langage for communicating with a relational database 
+
+  Different "dialects" 
+
+SQL commands 
+  Manipulating data
+    Insert 
+    Update
+    Delete
+
+  Querying data
+    Select
+
+  Structure data
+    Create table
+    Alter table
+    Drop table
+
+    Add column
+    Drop column
+
+Client Server model
+  Request/Response 
+
+Server: Postgres
+Client: Command line applications/Graphical User Interfaces/Web apps
+
+Database Server -[Web Server - Web Client]
+
+Database - Server - Client 
+
+ 
+
+ 
+
