@@ -76,7 +76,134 @@ Database Server -[Web Server - Web Client]
 
 Database - Server - Client 
 
- 
+Client - Server - Database 
 
- 
+Communication protocols used to transfer data over internet 
 
+TCP/IP: Transmission Control Protocol / Internet Protocol 
+
+Client/Server uses a communication protocol 
+
+Postgres follows client-server model and supports TCP/IP for communication 
+
+
+IP addresses: location of computers on a network 
+Ports: describes where to receive traffic at recipient computer 
+
+port 80: HTTP requests 
+5432: most database ports - Default port for Postgres
+
+TCP/IP: 
+  connection-based protocol
+  Open a connection to start communications 
+  Close a connection to end communications 
+
+TCP/IP suit of protocols
+
+connections/sessions 
+
+session: marks the start and end of a connection
+
+session: 
+start a connection - transactions are committed to the database- end a connection
+
+UDP: User Datagram Protocol
+  Hosts on the network send data (datagrams) without  any connections established
+
+  fast/less reliable than TCP
+
+  ex. real time streaming or Voice over IP use UDP
+
+  fewer delays over UDP than TCP
+
+TCP: 
+  continuous connections - more reliable, more latency
+
+server - database: 
+  establish a connection to start a session 
+
+Transactions: atomic units of work for database to perform 
+
+Relational databases are *transactional*: All changes to data made through units called transactions 
+  
+  transaction: single/multiple changes 
+
+    changes within data within a database: 
+      UPDATE/INSERT/DELETE
+
+    within a transaction multiple changes are executed in an *ordered* sequence that we dictate to transaction 
+
+ operation - success/fails together as a unit 
+
+Relational databases: All work captured in transactions 
+
+Each transaction, work is done with UPDATE/INSERT/DELETE bundled as a whole 
+
+ex
+
+  transaction.add('INSERT INTO...')
+  transaction.add('DELETE...')
+  
+  queue up work in a transaction 
+  then *commit* the transaction
+
+  transaction.commit() 
+
+"queue" up the changes (UPDATE/INSERT/DELETE) and "commit" the 
+
+ transaction can be cleared by using a rollback
+
+ transaction.rollback()
+
+Why bundle work into transactions? 
+  Database systems can fail 
+  Database always in a valid state
+
+Summary:
+` Queue up your INSERT/DELETE/UPDATE in a transaction and commit the transaction 
+
+  If error, can rollback the transaction 
+
+ACID Properties 
+
+Review: 
+  1. Databases use client-server model over a network 
+  2. Postgres uses TCP/IP - a connection-based protocol
+
+  3. Start/End session 
+
+  4. Sessions have transactions that commit work to a database 
+
+Maintain consistency in a database before/after a transaction, ACID properties followed 
+
+A: Atomicity: Entire transaction takes place or not at all 
+
+C: Consistency: Database must be consistent before / after a transaction 
+
+I: Isolation: Multiple Transactions occur independently without interference 
+
+D: Durability: Changes of a successful transaction occurs even if system failure occurs 
+
+***Transactions: concern changing data in databaase INSERT/DELETE/UPDATE, not querying (no SELECT etc).
+
+Changes are queued into the transaction and then commit the transaction 
+
+Can rollback a transaction - cleared of commands
+
+Rollback; clear the queue of operations added to a transacton 
+
+Postgres: open source, general purpose, object-relational database management system 
+
+  Object-relational support: includes support for arrays, inheritance
+
+  highly scalable
+
+  transaction-based
+
+  multi-version concurrency control: avoids unnecessary locking when multiple writes are happening to the database at once - avoids wait times for access to database 
+
+    several databases available for reading from and writing to at once 
+
+  great performance / indexing capabilities for optimizing query performance 
+
+  
