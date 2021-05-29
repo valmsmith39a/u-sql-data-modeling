@@ -206,4 +206,44 @@ Postgres: open source, general purpose, object-relational database management sy
 
   great performance / indexing capabilities for optimizing query performance 
 
+ Postgres Terminal Commands 
+
+login: sudo -u postgres -i 
+
+start a server: pg_ctl -D /usr/local/var/postgres start
+
+create a database: createdb <name>
+delete a database: dropdb <name> 
+
+psql: interact with a Postgres database 
+  interactive terminal app 
+
+  begin a connected session with that database
+
+    psql <dbname>
+
+   
+psql commands 
   
+  list databases: \l 
+
+  quit: \q
+
+  create a table within a database: create table <name>
+
+  example: 
+
+    create table table1(
+      id INTEGER PRIMARY KEY
+      description VARCHAR NOT NULL,
+  );  
+
+  see tables \dt
+
+  see table schema for table: \d table1
+
+  connect to a diffrent database \c <db name>
+
+relation and table same thing 
+
+
