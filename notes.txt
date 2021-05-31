@@ -252,3 +252,27 @@ relation and table same thing
     insert a row: INSERT INTO table1 (id, description) VALUES(1, 'this is a thing'); 
     query a row: SELECT * from table1; 
     query a row with a filter: SELECT * from table1 WHERE id = 1;  
+
+psql: Postgres client to interact with Postgres database 
+
+pgAdmin: GUI Postgres client to interact with PostgresSQL 
+
+PopSQL: GUI Postgres client 
+
+Postgres Adapters: psycopg2 = to make client Python apps 
+
+DBAPISs:
+  Provides a standard interface for one programming language to talk to relational database server 
+
+  low level library for writing SQL statements that connevct to a database 
+
+  also known as database adapters 
+
+different DBAPIs for every server framework or language + database system 
+
+  To connect Ruby on Rails app to Postgres server, user ruby-pg 
+
+  To connect node application to Postgres sever, use node-postgres
+
+  To connect Django/Flask application to a Postgres server: psycopg2
+
