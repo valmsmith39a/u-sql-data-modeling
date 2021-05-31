@@ -246,4 +246,9 @@ psql commands
 
 relation and table same thing 
 
+  example of using psql 
 
+    start connection to database 'example': psql example
+    insert a row: INSERT INTO table1 (id, description) VALUES(1, 'this is a thing'); 
+    query a row: SELECT * from table1; 
+    query a row with a filter: SELECT * from table1 WHERE id = 1;  
