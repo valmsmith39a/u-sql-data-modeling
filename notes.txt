@@ -276,3 +276,32 @@ different DBAPIs for every server framework or language + database system
 
   To connect Django/Flask application to a Postgres server: psycopg2
 
+psycopg2 commands
+
+    conn = psycopg2.connect(...) : Establish a connection, starting a session, begins a transactoin 
+
+    cursor = conn.curosr() : set a cursor to begin executing commands 
+
+    cursor.execute(<sql command string>)
+  
+    cursor.commit() : commit the transaction 
+
+    cursor.rollback() : rollback the transaction 
+
+ Steps to get a database-backed web application up and running
+
+  1. create a database using createdb in Postgres
+
+  2. establish a donncection to the database
+      use psycopg2.connect()
+
+  3. define and create data schema 
+      execute CREATE TABLE commands to create tables/define schema (attricutes, data types etc) that define what data gets housed for web app) 
+
+  4. seed database with initial data 
+
+  5. create routes and views
+
+  6. run server 
+
+  7. deploy server to the web 
