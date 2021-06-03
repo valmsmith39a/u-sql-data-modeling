@@ -423,4 +423,66 @@ SQLAlchemy's Layers of Abstraction
 
     Maps classes to tables 
 
-    
+    ORM: optional library to interact (write/read) with database 
+
+    SQLAlchemy Core
+
+    SQLAlchemy ORM
+      Uses the Core library 
+
+      ORM maps from database schema to Python objects 
+
+      ORM persists objects into corresponding database tables 
+
+  Mapping between Tables and Classes
+
+      class Human:
+
+        def __init__(self, first_name, last_name, age):
+          self.first_name = first_name
+          self.last_name = last_name
+          self.age = age 
+      
+      sarah = Human('Sarah', 'Silverman', 48) 
+
+      bob = Human('Bob', 'Sage', 54)
+
+      ...
+
+      CREATE TABLE humans (
+        id INTEGER PRIMARY KEY, 
+        first_name VARCHAR
+        last_name VARCHAR
+        age INTEGER 
+
+    class is the table
+
+    attributes are the columns 
+
+    instantiate a class is like creating a table 
+
+    create instances (objects) of a class is like creating rows in a table 
+
+    column maps to attribute in class
+
+    table schema maps to class definition 
+
+    rows in a table map to objects that are instances of a class 
+
+    Summary: 
+
+      Tables map to classes 
+
+      Table records(rows) map to class objects 
+
+      Table columns map to class attributes 
+
+Flask 
+
+  simple web framework for serving web pages with data 
+
+  https://flask.palletsprojects.com/en/2.0.x/
+  
+  https://docs.sqlalchemy.org/en/14/dialects/
+
+
