@@ -305,3 +305,122 @@ psycopg2 commands
   6. run server 
 
   7. deploy server to the web 
+
+SQLAlchemy: Python SQL Toolkit - Tool to interact with databases
+  Object Relational Mapping: maps tables and columns to class objects and attributes 
+
+ Example 1:
+   in SQL
+    CREATE TABLE todos (
+      id INTEGER PRIMARY KEY,
+      description VARCHAR NOT NULL,
+      completed BOOLEAN NOT NULL DEFAULT false
+
+    ); 
+
+  in SQLAlchemy ORM 
+    class Todo(db.Model):
+      id = db.Column(db.Integer, primary_key=True)
+      description = db.Column(db.String(), nullable=False)
+      completed = db.Column(db.Boolean, nullable=False, default=False)
+
+ 
+  Example 2: 
+    SELECT * from todos
+
+    Todo.query.all()
+    
+    Gets executed no mater which database system 
+
+    Each database system may make you write SQL in a slightly different way. 
+
+    SQLAlchemy abstracts those differences away. Don't need to write SQL statement directly 
+
+    Can ignore database system. Can switch between SQLLite/Postgres for example 
+
+
+Benefits of SQLAlchemy:
+
+  function based query construction 
+
+  avoid writing raw SQL
+
+  avoid sending SQL to the database on every call. Offers automatic caching. 
+
+SQLAlchemy's Layers of Abstraction 
+
+  Without SQLAlchemy:
+
+    use a DBAPI like psycopg2 
+
+    establish connection: conn = psycopg2.connect(...
+    create a cursor: cur = conn.cursor()
+    execute SQL commands: cur.execute('SELECT...') and commit transactions 
+    
+    *not scalable as complexity grows 
+
+  With SQLAlchemy: 
+
+    Offers multiple layers of abstraction 
+
+    lowest level: offers DBAPI 
+
+    Connection Pool, Dialect
+
+    SQLExpressions / Engines 
+
+    ORM 
+
+  Dialect Docs: https://docs.sqlalchemy.org/en/14/dialects/
+
+    Allows us to forget about the database system we're using 
+
+  Connection Pool: 
+
+    Avoide open/close connections for every data change 
+
+    Handles dropped connections
+
+    Avoid many small calls when making small changes to DB 
+
+  Engine: 
+    
+    Lowest level layer of abstraction to interact with database 
+
+    Send raw SQL to database 
+
+    Ex 
+
+      engine = create_engine('postgres://...') 
+
+      conn = engine.connect()
+      result = conn.execute('SELECT * from vehicles;') 
+
+   SQL Expressions 
+      
+      compose python objects to compose SQL expressions instead 
+
+      todos = Table('todos', ...)
+
+      ins = todos.insert().values(
+              description='Clean my room', 
+              completed=False
+          )
+
+      s = select([todos])
+
+      conn = engine.connect()
+      result = conn.execute(ins)
+      result = conn.execute(s)
+
+      result.close()
+
+  SQLAlchemy ORM 
+    highest level of abstraction
+
+    compose SQL Expressions by building Python classes of objects which map 
+    to tables in the database 
+
+    Maps classes to tables 
+
+    
