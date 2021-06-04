@@ -1,21 +1,21 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-# instantiate application 
-# create an instance of Flask 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://georgewee@localhost:5432/example'
 
-"""
- @app: python decorator 
- @app.route('/'): tell flask application which endpoint (route) to listen to. listen to the "home page" route (root route) "/"
- def index(): is the route handler. listens to connections to the root route a
- @app.route: define a route
- def index: define a route handler 
- To run: 
- FLASK_APP=flask-hello-app.py: specify the location of our flask app 
- FLASK_APP=flask-hello-app.py flask run 
-"""
+db = SQLAlchemy(app)
+
+class Person(db.Model):
+  __tablename__ = 'persons'
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(), nullable=False)
+  
+db.create_all()
 
 @app.route('/')
 def index(): 
   return 'Hello Cheeze!'
 
+if __name__ == '__main__':
+  app.run()
