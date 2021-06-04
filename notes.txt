@@ -485,4 +485,86 @@ Flask
   
   https://docs.sqlalchemy.org/en/14/dialects/
 
+  127.0.0.1: IP Address (internet protocol address) of local machine - unique address that identifies a device on the internet or local network. 
+
+  localhost: hostname refering to current computer used to access it. localhost resolves to 127.0.0.1
+ 
+ @app.route('/')
+ def index(): 
+    return 'Hello world'
+  
+ @app.route: Python decorator 
+  Decorators take functions and return another function to extend the input function with additional ("decorated") functionality. 
+  @app.route is a decorate that takes an input function index() as a callback that is invoked when a requet to route / comes in from client 
+ 
+  Enable live reload: 
+    export FLASK_ENV=development 
+    or 
+    FLASK_APP=app.py FLASK_DEBUT=true flask run 
+
+  Another way to run flask app:
+    if __name_- = '__main__':
+      app.run()
+
+    script's __name__ set to __main__ by Python interpretor which runs through executing all code found in the script. When reaches the end and finds if __name__ == 'main__' evaluates to True and calls app.run() 
+
+db = SQLAlchemy(app) # an instance of the SQLAlchemy class from Flask-SQLAlchemy library
+
+db: interface for interacting with database
+db.Model: object that lets us create / manipulate data models (class or table) 
+db.session: create/maniupulate database transactons (within that session) 
+
+SQLAlchemy models
+  
+  set tables: db.create_all()
+
+SQLAlchemy: dataytpes
+  Integer
+  String(size)
+  Text
+  DateTime
+  float
+  Boolean
+  PickleType
+  LargeBinary
+
+  https://flask-sqlalchemy.palletsprojects.com/en/2.x/models/
+  
+  Ex
+    name = db.Column(db.String()) : sets a data type of string with variable length
+
+    VARCHAR: Variable Character: character data that is varying. Indeterminate length string data type.
+
+ 
+SQLAlchemy constraints
+  constraints: ensures data integrity
+    data integrity:  
+      data is stored accurately
+      applying rules consistently 
+  Example
+    name = db.Column(db.String(), nullable=False)
+    nullable=False: same as NOT NULL in SQL: column should never be null 
+    unique=True: same as UNIQUE in SQL: each row should have a unique value
+    unique=True, nullable=False
+
+
+Recap:
+  SQLAlchemy: layers of abstracton
+    DBAPI: Implements a protocol for connecting to a database (ex pyscopg2)
+    Connection Pool: Manages a pool of connects  that we reuse 
+    Dialect: Translates generic SQL instructions to database-specific instructions for the DPAPI + specific backend (MySQL, Postgres.etc)
+    engine: connects to database 
+    SQL Expression: Write SQl using Python expressions
+    ORM: Write and query Python objects mapped to db tables, generating SQL expressions for you.
+
+  SQLAlchemy ORM: 
+    Mapping between Classes and Tables
+  
+  Flask SQLAlchemy library and SQLAlchemy class 
+    db.Model: ability to create and manipulate models (tables/classes)
+    db.session: ability to create and manipulate transactions (bundles of SQL statements)
+  
+  Define a model (class Person) 
+
+  Debugging tricks using dunder repr method __repr__ 
 
