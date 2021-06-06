@@ -736,4 +736,79 @@ Create a TODO app
     Looks for index.html file in templates folder
 
 
+  Set up Todo Flask app with home route
+
+  Create Todo Class (table/data model)
+
+  Create a todoapp Postgres database using createdb todoapp
+    dropdb todoapp && createdb todoapp
+
+  Connect SQLAlchemy ORM to Postgres database using app.config['SQLALCHEMY_DATABASE_URI']... 
+  pip3 -m venv venv
+  
+  pip3 install -r requirements.txt
+
+  note that SQLAlchemy no longer allows "postgres" in config.. must be "postg
+  run psql to check database
+
+    psql todoapp
+
+    \dt: list out database tables should see todos table 
+    INSERT INTO todos (description) VALUES ('Do a thing 1'); # create row data
+      repeat 4 times
+     
+    select * from todos; # see the created rows
+
+    FLASK_APP=app.py FLASK_DEBUG=true flask run 
+
+    Should see list of Do a thing 1, Do a thing 2... 
+
+ Model View Controller (MVC)
+  Common pattern for architecting full stack applications
+
+  3 layers
+
+  Models: manage data and business logic
+    what happens inside models and database (database)
+  Views: display/representation logic (html)
+  Controllers: routes commands to models and views. contains control logic. (API routes/endpoint urls)
+
+ Updating: User input
+
+ How to accept/get user data
+ Send data in cotrollers
+ Manipulate models
+ Direct how view should update
+
+Get user data in Flask 
+
+  URL query parameters: /foo?field1=value1 use request.args
+    value1 = request.args.get('field1')
+
+  For form input, use request.form
+  username = request.form.get('username')
+  password = request.form.get('password')
+
+  For data type application/json, use request.data
+  data_string = request.data
+  data_dictionary = json.loads(data_string)
+
+  Summary
+    3 methods of getting user data from view to controller
+      1. URL query parameters
+      2. Forms
+      3. JSON 
+
+  Use Forms
+    <input type="text" value="foo2" id="bar1" name="bar2" class="bar3">
+
+    request.form.get('bar2') # use 'name' to get the form input data in flask route
+
+  POST submission
+    on submit, HTTP POST request to the route /create with a request body
+
+  GET submission
+    GET request with URL query parameters that append form data to the url 
+      request to /create?foo=bar
+
 
