@@ -710,4 +710,30 @@ Summary:
 
   2. Commit: persisteed changes on the database. db.session the starts a new transaction.
 
+**
+
+Build a CRUD App with SQLAlchemy
+
+**
+
+CREATE, READ, UPDATE, DELETE(CRUD)
+
+CREATE (CRUD): INSERT (SQL): db.session.add(user) (SQLAlchemy ORM)
+READ: SELECT: User.query.all()
+UPDATE: UPDATE: user.foo = 'new value'
+DELETE: DELETE: db.session.delete(user)
+
+Model View Controller, Migrations, Modeling relationshiops, Implementing Search
+
+Create a TODO app
+
+  flask offers render_template
+
+  can pass in data to render_template
+
+  Jinja: templating engine: embed non html inside html file.
+    replaces template strings in html file with strings and renders html file to the user.
+    Looks for index.html file in templates folder
+
+
 
