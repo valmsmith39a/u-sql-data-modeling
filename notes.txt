@@ -837,4 +837,10 @@ AJAX Requests
      }
     }); 
 
+use try except finally in route to handle errors
+
+read/create data in views/controllers models
+
+Next: change models over time, handle updates and deletes
+
 
