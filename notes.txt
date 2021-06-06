@@ -664,4 +664,50 @@ SQLAlchemy ORM in depth
 
             Ex OrderItem.query.filter(product.id=3)
 
+SQLAlchemy Object Lifecycle
+  start a connection
+  start a session
+  commit transactions
+  close a connection
+  session ends
+
+  user = User(name='Amy') : Transient: Object exists, not associated with a Session
+
+  INSERT 
+  session.add(user1)
+  session.add_all([user1, user2]) : Pending: Object associated with a session object. Can undo (rollback)
+
+  DELETE
+  session.delete(user1) : Object stays in a pending state until flush happens
+  
+  Flush: takes pending changes/translates them into SQL commands, ready to be committed to database
+
+  On INSERTs, flush allows future primary key values to exist
+
+  Not a commit. Nothing persisteted to database yet. 
+
+  Stages
+    1. Transient: object exists Ex user1 = User(name='Amy'), not attached to session yet
+    2. Pending: object attached to session. Undo (db.session.rollback()) available. Waiting for flush. Ex. INSERT (session.add(user)), UPDATE(user.name = 'New name for Amy', DELETE (session.delete(user)) all in Pending state. NOTE: db.session.rollback() is in TRANSIENT State, but is *available* in Pending state. 
+    3. Flushed: ready to be committed to db. Translate actions into SQL commands for engine
+    4. Commited: manually called for a change to persist to database *permanently). Session's transactions cleared for new set of changes.
+
+Object lifecycle flow
+  1. Pending objects: adds pending changes to a transaction that db.session manages
+    Ex.
+       session.add(user) (INSERT)
+       session.delete(user) (DELTE)
+       user.name = 'new name' (UPDATE)
+  2. Session flush:
+     User.query.all(): "flushes" pending changes: translates to SQL commands
+     
+  3. Session commit: Persist to database. Session starts a new transaction. 
+
+  Note: session.commit() will flush and commit. 
+
+Summary:
+  1. Flush takes pending changes, translates them to commands ready to be commit. Occurs when you call Query or db.session.commit()
+
+  2. Commit: persisteed changes on the database. db.session the starts a new transaction.
+
 
