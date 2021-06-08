@@ -843,4 +843,179 @@ read/create data in views/controllers models
 
 Next: change models over time, handle updates and deletes
 
+**
 
+Migrations
+
+**
+
+Schema migration 
+
+Changing data schema 
+
+Add a column called completed with data type boolean 
+
+Changes to data schema 
+
+Corrupt column, wrong variable names 
+
+Quickly roll back changes to a valid state
+
+Test changes before make them 
+
+Test in development environment 
+
+Schema migration: file that keeps track of changes to our database scheme (structure of our database)
+
+  Think of as git commits 
+
+  Version control of data schema
+
+Summary:
+
+  Migrations: manage modifications to data schema 
+
+  Migration: a file tracks changes to database schema (structure of our database)
+    
+    version control 
+
+  Upgrade (apply migrations) / roll back database schema 
+
+Migrations: 
+  
+   stored as local files in app 
+
+   migrations folder 
+
+    add_tables_0001.py
+    add_columns_to_todos_0002.py
+    rename_column_to_todos_0003.py
+
+Migrations applied or rolled back using command line scripts
+  
+    db migrate: create a migration script templates to fill out 
+
+    db upgrade: apply unapplied migrations 
+
+    db downgrade: roll back 
+
+Flask Migrate: migration manager for micrating SQLAlchemy-based database changes
+
+Flask Script:  run migrations scripts from terminal 
+
+Data migrations: 
+
+  INitialze the migration repository structure for storing migrations 
+
+  Create a migration script (Flask Migrate)
+
+  Run (manually) the migration script 
+
+Migrations:
+  1. encapsulate a set of changes to database scheme 
+  2. uniquely named 
+  3. stored as local files 
+  4. 1-1 mapping between changes mad eto db and the migration files that exist in migrations/dolder
+
+Steps for migration: 
+1. Initialzie the migration repo strcuture for stoing migrations
+2. Craeat migrattion script (flask-scipt)
+3. Run migration script using Flask Script
+
+Why use migrations? 
+
+Without flask megrate\
+
+Without flask migrate
+
+  app.py: db.acreate(aol)
+
+
+  ccmodls=es
+
+  Flask Migrate: auto dects changes from old vdserso & new versions 
+
+  If control over chanvg examples
+
+  Isolate unitse of migratino sctirrip to se can safe 
+
+Summary: Autodetects: changes from old & new version of SQLAlchemy models
+
+Creates migration script - resolves diffrence between old / new versions
+
+Keep existing schema structures/keep using data 
+
+Flask Migrate: add a completed column to todo model 
+
+Alembic: used under the hood as part of flask-Migrate
+
+Example of using flask-Migrate 
+pip3 install flask-Migrate
+
+initializing, upgrading, downgrading, generating migrations
+
+Flask Migrate commands 
+
+flask db init: create initial migrations directory structure 
+  
+   create a number of folders inside project directory 
+
+   migrations folder, versions folder (stores all migrations scripts)   generate scripts to create/generate migrations
+
+   alembic.ini
+    config script: configure logging, file names 
+
+flask db migrate: detects the model changes to be made and creates a migration file with upgrade and downgrade logic set up. 
+
+dropdb todoapp: drop db first so that migration scripts can create initial set of schema Z 
+
+flask db migrate: 
+  detected nothing in db 
+  searched through SQL alchemy models, detected table todos and added as migration in versions folder 
+
+**can remove db.create_all() because flask db migrate will take care of that 
+
+flask db upgrade: runs upgrade command in the migration file, to apply the migration 
+
+flask db downgrade: runs the downgrade command in the migration file to rollback the migration 
+
+flask db upgrade: applied the migration with the revision id 
+
+  psql todoapp
+  \dt : should see alembic_version (manages versions) and todos table \
+
+
+make another change 
+
+psql todos 
+
+select * from todos;
+
+Review how to set up and run migrations 
+
+1. Bootstrap database migrate commands: link to Flask app models and database, link to command line scripts for running migrations, set up folders to store migrations (as versions of the database)
+  
+   migrate = Migrate(app, db): link app, db to command line scripts 
+
+   flask db init # initialize 
+
+2. Run initial migration 
+
+  flask db migrate # run initial migration, do not use db.create_all
+
+3. Migrate on changes to our data models 
+
+  * Changes to SQLAlchemy models 
+  * Allow Flask Migrate to auto generate a migration script based on the changes 
+  * Fine tune the micration scripts
+  * Run the migration: flask db upgrade
+
+RECAP
+
+Apply changes to schema using migrations allow to have version control over database schema. 
+
+upgrades, downgrades (rollbacks) control version of database that we're using ensures against failures in database scheme 
+
+Good idea to set up migrations at beginning of applications. 
+
+Change application while preserving existing data and keeping application in a valid state. 
