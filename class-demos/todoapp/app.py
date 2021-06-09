@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify, abort, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import sys
+import os
 
 app = Flask(__name__)  # create an application named after our file (app)
-app.config[
-    "SQLALCHEMY_DATABASE_URI"] = "postgresql://georgewee@localhost:5432/todoapp"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQL_URI")
 
 db = SQLAlchemy(app)
 
@@ -55,6 +55,18 @@ def set_completed_todo(todo_id):
     finally:
         db.session.close()
     return redirect(url_for('index'))
+
+
+@app.route('/todos/<todo_id>', methods=['DELETE'])
+def delete_todo(todo_id):
+    try:
+        Todo.query.filter_by(id=todo_id).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+    finally:
+        db.session.close()
+    return jsonify({'success': True})
 
 
 @app.route("/")
