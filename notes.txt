@@ -924,7 +924,7 @@ Steps for migration:
 
 Why use migrations? 
 
-Without flask megrate\
+Without flask migrate\
 
 Without flask migrate
 
@@ -933,11 +933,10 @@ Without flask migrate
 
   ccmodls=es
 
-  Flask Migrate: auto dects changes from old vdserso & new versions 
+  Flask Migrate: auto detects changes from old versions & new versions 
 
-  If control over chanvg examples
+  If control over change examples
 
-  Isolate unitse of migratino sctirrip to se can safe 
 
 Summary: Autodetects: changes from old & new version of SQLAlchemy models
 
@@ -1019,3 +1018,182 @@ upgrades, downgrades (rollbacks) control version of database that we're using en
 Good idea to set up migrations at beginning of applications. 
 
 Change application while preserving existing data and keeping application in a valid state. 
+
+DELETE a todo item 
+
+  Click x button to remove item in database
+
+  Update view with that item removed from the list 
+
+  Loop through items, send data to controller, know which item to delete, get the appropriate item and delete that object from database. Controller should notify view to refresh the page. Home page - fresh fetch to not include deleted items. 
+
+SQLAlchemy ORM 
+
+  todo = Todo.query.get(todo_id)
+
+  db.session.delete(todo) 
+
+  Todo.query.filter_by(id=todo_id).delete()
+
+  db.session.commit()
+
+SQL:
+  DELETE FROM table_name
+  WHERE condition;
+
+In SQL Alchemy ORM:
+  todo = Todo.query.get(todo_id)
+  db.session.delete(todo)
+  Todo.query.filter_by(id=todo_id).delete()
+  db.session.commit()
+
+**
+
+Modeling Relationships
+
+**
+
+multiple models with relationship with one another
+
+relationships between these models can determine if certain actions 
+on one model should happen on other models 
+
+when something happens to one model, related model objects should 
+also be affected 
+
+removing a user's account, should also remove all the user's photos, documents etc. 
+
+Deleting a discussion thread should also delete all of it's comments
+
+dactivate a profile should also deactivate all the host's listings 
+
+model a relationship between todo list and todo items 
+
+Collection of todo lists
+
+Relationships and Joins 
+
+Relationships in Relational Databases
+
+Tables and rows across tables 
+
+Example 
+
+Between tables 
+
+Use a foreign key 
+Foreign key stored in "child" table 
+
+A driver has many vehicles 
+  
+  vehicles                drivers
+  id make driver_id       id name 
+  1   a      3             1 Joe
+  2   b      3             2 Mike
+  3   c      2             3 Sam 
+
+driver_id is the *foreign key* 
+
+retrieves the primary key from the parent table 
+
+child object belongs to a parent object through foreign key stored on child table 
+
+Query: "What is the make, model, year of vehicles that driver Sarah has?"
+
+SELECT make, model, year FROM vehicles
+  JOIN drivers 
+  ON vehiciles.driver_id = drivers.id
+  WHERE drivers.name = 'Sarah';
+
+SQL Joins 
+
+inner join: 
+  A and B 
+  select first_name, last_name, order_date, order_amount
+  from customers c
+  inner join orders o
+  on c.customer_id = o.customer_id
+
+left join: 
+  A
+  select first_name, last_name, order_date, order_amount
+  from customers c
+  left join orders o
+  on c.customer_id = o.customer_id
+  view raw
+
+right join: 
+  B 
+  select first_name, last_name, order_date, order_amount
+  from customers c
+  right join orders o
+  on c.customer_id = o.customer_id
+  
+full join: 
+  A or B
+  select first_name, last_name, order_date, order_amount
+  from customers c
+  full join orders o
+  on c.customer_id = o.customer_id
+  http://www.sql-join.com/sql-join-typesa
+  https://www.geeksforgeeks.org/sql-join-set-1-inner-left-right-and-full-joins/
+
+db relationship
+  provides and configures a mapped relationship between 2 models
+
+Parent class SomeParent and Child class SomeChild
+  
+class SomeParent(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(50), nullable=False)
+  children = db.relationship('SomeChild', backref='some_parent')
+  
+  SomeChild: name of the child class
+  some_parent: property name of the parent object 
+
+  child1 = SomeChild(name = 'Andrew')
+  child1.some_parent : returns the parent object that child1 belongs to 
+
+Summary:
+  SQLAlchemy configures settings between model relationships once and generates JOIN statements
+
+  db.relationship: interface to provide/configure a mapped relationship between two models 
+
+  db.relationship defined on the parent model
+    Sets the name of it's children Ex parent1.children
+     name of parent on child using backref Ex. child1.my_parent
+ https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#simple-relationships
+ https://docs.sqlalchemy.org/en/14/orm/relationship_api.html#sqlalchemy.orm.relationship
+
+ When to load joined data (when to get child.some_parent) is important
+
+  Lazy Loading: load needed joined data only as needed (default)
+    Pro: no initial wait time 
+    Con: join SQL call every time there is a request for a joined asset
+
+  Eager loading: load all needed joined data objects all at once
+    Pro: reduces further queries to the database  Eager loading: load all needed joined data objects all at once
+      Pro: reduces further queries to the database - Subsequent calls read existing data 
+      Con: loading joined table has long upfront initial load time  
+
+children = db.relationship('ChildModel', backref='some_parent', lazy=True)
+
+collection_class = list 
+cascase = 'save-update' # OR: all, delete-orphan
+
+driver_id REFERENCES drivers (id)
+  ensures:
+     driver_id maps to an id that belongs in the driver's table
+     driver_id is nonempty
+
+referential integrity is preserved 
+
+Need to specifiy the foreign key on the child *explicityl*
+
+db.relationship : defined on Parent Model
+
+db.ForeignKey: defined on Child Model 
+
+one-to-many relationship between todos and todolists 
+
+https://database.guide/the-3-types-of-relationships-in-database-design/

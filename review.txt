@@ -1,0 +1,43 @@
+
+login
+
+dropdb database_name
+createdb database_name
+
+psql database_name
+\dt 
+\d table_name
+INSERT INTO table_name DESCRIPTION('id', 'description') VALUES(1, 'some description');
+SELECT * from table_name;
+\q
+
+migrations
+  flask db init
+  flask db migrate
+  flask db upgrade
+  flask db downgrade
+ 
+joins
+  inner
+
+  left
+
+  right
+
+  full  
+
+relationships between tables
+  parent/child tables
+  primary/foreign keys
+    db.relationship
+    # Parent Table 
+    class Driver(db.Model):
+      vehicles = deb.relationship('Vehicle', backref='driver', lazy=True)
+    
+    # Child Table
+      class Vehicle(db.Model):
+
+      driver_id = db.Column(db.Integer, db.ForeignKey('drivers.id'), nullable=False)
+
+
+  db.ForeignKey  
