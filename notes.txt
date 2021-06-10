@@ -1197,3 +1197,79 @@ db.ForeignKey: defined on Child Model
 one-to-many relationship between todos and todolists 
 
 https://database.guide/the-3-types-of-relationships-in-database-design/
+
+**
+
+run migrations every time change our database schema 
+
+***lesson 13 CRUD on a list of todos *** 
+
+**
+Model Relationships
+**
+
+Relationships in Relational Databases
+
+One to many
+  A class has many students
+  A teacher has many students
+
+One to one 
+  An account has one user
+  A passport belongs to a person
+
+Many to many
+  A school teaches many subjects
+  a subject is taught in many shcools  
+ 
+ One to many
+ An owner has many properties
+ properties stores foreign key owner_id
+
+ One to one 
+ A passport belongs to a person
+ passports stores foreign key person_id
+
+ Many to Many case
+
+  orders products
+
+  order_items: need an association table or a joining table 
+
+  association table exists to join the two tables together, storing 
+  two foreign keys that link to the two foreign tables that have a relationship with each other. 
+
+  order_items = db.Table('order_items',
+    db.Column('order_id', db.Integer, db.ForeignKey('order.id'), primary_key=True),
+    db.Column('product_id', db.Integer, db.ForeignKey('product.id'), primary_key=True)
+)
+
+class Order(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  status = db.Column(db.String(), nullable=False)
+  products = db.relationship('Product', secondary=order_items,
+      backref=db.backref('orders', lazy=True))
+
+class Product(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(), nullable=False)
+
+Steps to use python code to add items in database without running a file 
+python3
+>>> from app import db, Order, Product
+>>> db.create_all()
+>>> order = Order(status='ready')
+>>> product = Product(name='great widget')
+>>> order.products = [product]
+>>> product.orders = [order]
+>>> db.session.add(order)
+>>> db.session.commit()
+>>> exit()
+
+psql todoapp
+\dt
+select * from "order"; # order is keyword, so use "order"
+select * from product;
+select * from order_items; # this is our association table
+
+

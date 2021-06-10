@@ -41,3 +41,43 @@ relationships between tables
 
 
   db.ForeignKey  
+
+Many to Many relationships:
+
+  association table exists to join the two tables together, storing 
+  two foreign keys that link to the two foreign tables that have a relationship with each other. 
+
+  order_items = db.Table('order_items',
+    db.Column('order_id', db.Integer, db.ForeignKey('order.id'), primary_key=True),
+    db.Column('product_id', db.Integer, db.ForeignKey('product.id'), primary_key=True)
+)
+
+class Order(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  status = db.Column(db.String(), nullable=False)
+  products = db.relationship('Product', secondary=order_items,
+      backref=db.backref('orders', lazy=True))
+
+class Product(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(), nullable=False)
+
+Steps to use python code to add items in database without running a file 
+python3
+>>> from app import db, Order, Product
+>>> db.create_all()
+>>> order = Order(status='ready')
+>>> product = Product(name='great widget')
+>>> order.products = [product]
+>>> product.orders = [order]
+>>> db.session.add(order)
+>>> db.session.commit()
+>>> exit()
+
+psql todoapp
+\dt
+select * from "order"; # order is keyword, so use "order"
+select * from product;
+select * from order_items; # this is our association table
+
+
