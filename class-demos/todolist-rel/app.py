@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, jsonify, abort
+from flask import Flask, render_template, redirect, url_for, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate 
 
 import sys 
-import os 
+import os
+
+from werkzeug.utils import redirect 
 
 app = Flask(__name__)  # create an application named after our file (app)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQL_URI")
@@ -17,6 +19,7 @@ class Todo(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	description = db.Column(db.String(), nullable=False)
 	completed = db.Column(db.Boolean, nullable=False, default=False)
+	list_id = db.Column(db.Integer, db.ForeignKey('todolists.id'), nullable=False)
 	def __repr__(self):
 			return f"<Todo {self.id} {self.description}>"
 
@@ -48,9 +51,10 @@ def create_todo():
   if not error:
       return jsonify(body)
 
-@app.route("/")
+@app.route("/lists/<list_id>")
+def get_list_todos(list_id):
+    return render_template("index.html", data=Todo.query.filter_by(list_id=list_id).all())
+
+@app.route('/')
 def index():
-    print('inside root')
-    return render_template("index.html", data=Todo.query.all())
-
-
+	return redirect(url_for('get_list_todos', list_id=1))
